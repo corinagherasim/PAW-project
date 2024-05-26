@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Latest News</h1>
+</div>
+
+<br />
+
+<div class="container">
+    @foreach (var articles in ViewBag.NewsList)
+    {
+
+        <h2 class="news">@articles.Title</h2>
+
+        <p class="news">@articles.Date.ToShortDateString()</p>
+
+        <p class="news">@articles.Category</p>
+
+        <p class="news">@articles.HeadLine</p>
+
+        <img class="photo" src="~/imag/@articles.Photo" />
+
+    }
+</div>
