@@ -4,6 +4,45 @@
 @{
 }
 
-<div class="text-center">
-    <h1 class="display-4">Users</h1>
-</div>
+@model IEnumerable<proj.ViewModels.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().User.Email)
+            </th>
+            <th>
+                Roles
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @foreach (var role in item.Roles)
+                    {
+                        <span>@role</span>
+
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.User.Id" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

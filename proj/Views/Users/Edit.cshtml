@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model proj.ViewModels.EditUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Edit User Roles";
+}
+
+<h2>Edit Roles for @Model.Email</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="Email" />
+
+        <label asp-for="Roles">Roles</label>
+        <div>
+            @foreach (var role in Model.Roles)
+            {
+                <div class="form-check">
+                    <input type="checkbox" name="SelectedRoles" value="@role.Value"
+                           class="form-check-input" @(role.Selected ? "checked" : "") />
+                    <label class="form-check-label">@role.Text</label>
+                </div>
+            }
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+

@@ -8,8 +8,8 @@ namespace proj.Models
 {
     public class UserCustom : IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
         public virtual ICollection<CommentModel>? Comments { get; set; }
 
