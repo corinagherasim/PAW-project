@@ -26,35 +26,67 @@ namespace proj.Controllers
         }
 
         // GET: Articles/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(int? suggestionId)
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName");
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "CategoryName");
+
+            if (suggestionId != null)
+            {
+                var suggestion = _context.UserSuggestions.FirstOrDefault(s => s.Id == suggestionId);
+                if (suggestion != null)
+                {
+                    var article = new ArticleModel
+                    {
+                        Title = suggestion.Title,
+                        Content = suggestion.Content
+                    };
+
+                    ViewBag.SuggestionId = suggestionId;
+
+                    return View(article);
+                }
+            }
+
             return View();
         }
 
         // POST: Articles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article)
+        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article, int? suggestionId)
         {
             /*if (ModelState.IsValid) // nu imi trece de asta
             {*/
-                try
+            try
+            {
+                article.Date = DateTime.Now;
+                _context.Add(article);
+                await _context.SaveChangesAsync();
+
+                if (suggestionId.HasValue)
                 {
-                    article.Date = DateTime.Now;
-                    _context.Add(article);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Home");
-            }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error saving article to the database");
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    var suggestion = await _context.UserSuggestions.FindAsync(suggestionId);
+                    if (suggestion != null)
+                    {
+                        _context.UserSuggestions.Remove(suggestion);
+                        await _context.SaveChangesAsync();
+                    }
                 }
-          /*  }*/
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName", article.CategoryId);
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving article to the database");
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            /*}*/
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "CategoryName", article.CategoryId);
             return View(article);
         }
+
+
 
     }
 }

@@ -15,6 +15,7 @@ namespace proj.Data
         public DbSet<CommentModel> Comments { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<UserCustom> UsersCustom { get; set; }
+        public DbSet<UserSuggestionModel> UserSuggestions { get; set; }
 
     }
 }

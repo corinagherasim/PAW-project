@@ -1,0 +1,45 @@
+﻿@model List<proj.Models.UserSuggestionModel>
+
+@{
+    ViewData["Title"] = "User Suggestions";
+}
+
+<h2>User Suggestions</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var suggestion in Model)
+            {
+                <tr>
+                    <td>@suggestion.Title</td>
+                    <td>@suggestion.Content</td>
+                    <td>@suggestion.Date.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@suggestion.Id" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <form asp-controller="Articles" asp-action="Create" method="get">
+                            <input type="hidden" name="suggestionId" value="@suggestion.Id" />
+                            <button type="submit" class="btn btn-primary">Use</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No suggestions found.</p>
+}
