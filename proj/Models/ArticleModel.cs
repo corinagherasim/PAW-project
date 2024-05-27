@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace proj.Models
 {
@@ -17,6 +18,7 @@ namespace proj.Models
         [Required(ErrorMessage = "Categoria este obligatorie")]
         public int CategoryId { get; set; }
         public virtual CategoryModel Category { get; set; }
+        [BindNever]
         public virtual ICollection<CommentModel> Comments { get; set; }
     }
 }
