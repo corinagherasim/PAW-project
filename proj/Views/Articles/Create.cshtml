@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" onsubmit="return validateForm()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="suggestionId" value="@ViewBag.SuggestionId" />
             <div class="form-group">
@@ -35,9 +35,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories" id="CategoryDropdown" onchange="checkCategory()"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+            <div class="form-group" id="NewCategoryDiv" style="display:none;">
+                <label for="NewCategory">New Category</label>
+                <input type="text" id="NewCategory" name="NewCategory" class="form-control" />
+                <span class="text-danger" id="NewCategoryError" style="display:none;">This field is required if you select 'Other'</span>
+            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-primary" />
             </div>
@@ -46,6 +52,37 @@
 </div>
 
 @section Scripts {
+    <script>
+        function checkCategory() {
+            var categoryDropdown = document.getElementById("CategoryDropdown");
+            var newCategoryDiv = document.getElementById("NewCategoryDiv");
+            var newCategoryInput = document.getElementById("NewCategory");
+            if (categoryDropdown.value === "0") { // Assuming "0" is the value for "Other"
+                newCategoryDiv.style.display = "block";
+                newCategoryInput.required = true;
+            } else {
+                newCategoryDiv.style.display = "none";
+                newCategoryInput.required = false;
+            }
+        }
+
+        function validateForm() {
+            var categoryDropdown = document.getElementById("CategoryDropdown");
+            var newCategoryInput = document.getElementById("NewCategory");
+            var newCategoryError = document.getElementById("NewCategoryError");
+            if (categoryDropdown.value === "0" && newCategoryInput.value.trim() === "") {
+                newCategoryError.style.display = "block";
+                return false;
+            } else {
+                newCategoryError.style.display = "none";
+                return true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            checkCategory();
+        });
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

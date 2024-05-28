@@ -25,12 +25,8 @@ namespace proj.Controllers
             _logger = logger;
         }
 
-        // GET: Articles/Create
-        [HttpGet]
         public IActionResult Create(int? suggestionId)
         {
-            ViewBag.Categories = new SelectList(_context.Categories, "Id", "CategoryName");
-
             if (suggestionId != null)
             {
                 var suggestion = _context.UserSuggestions.FirstOrDefault(s => s.Id == suggestionId);
@@ -42,49 +38,73 @@ namespace proj.Controllers
                         Content = suggestion.Content
                     };
 
+                    var categories = _context.Categories.ToList();
+                    categories.Insert(0, new CategoryModel { Id = 0, CategoryName = "Other" });
+                    ViewData["Categories"] = new SelectList(categories, "Id", "CategoryName");
                     ViewBag.SuggestionId = suggestionId;
-
                     return View(article);
                 }
             }
 
+            var allCategories = _context.Categories.ToList();
+            allCategories.Insert(0, new CategoryModel { Id = 0, CategoryName = "Other" });
+            ViewData["Categories"] = new SelectList(allCategories, "Id", "CategoryName");
+
             return View();
         }
 
-        // POST: Articles/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article, int? suggestionId)
+        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article, string NewCategory)
         {
-            /*if (ModelState.IsValid) // nu imi trece de asta
-            {*/
-            try
+            if (!string.IsNullOrEmpty(NewCategory))
             {
-                article.Date = DateTime.Now;
-                _context.Add(article);
+                // Adaugă noua categorie în baza de date
+                var newCategory = new CategoryModel { CategoryName = NewCategory };
+                _context.Categories.Add(newCategory);
                 await _context.SaveChangesAsync();
 
-                if (suggestionId.HasValue)
-                {
-                    var suggestion = await _context.UserSuggestions.FindAsync(suggestionId);
-                    if (suggestion != null)
-                    {
-                        _context.UserSuggestions.Remove(suggestion);
-                        await _context.SaveChangesAsync();
-                    }
-                }
+                // Setează categoria articolului la noua categorie
+                article.CategoryId = newCategory.Id;
+            }
 
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error saving article to the database");
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            /*}*/
-            ViewBag.Categories = new SelectList(_context.Categories, "Id", "CategoryName", article.CategoryId);
+            /*if (ModelState.IsValid)
+            {*/
+                try
+                {
+                    article.Date = DateTime.Now;
+                    _context.Add(article);
+                    await _context.SaveChangesAsync();
+
+                    // Șterge sugestia utilizată
+                    if (int.TryParse(Request.Form["suggestionId"], out int suggestionId))
+                    {
+                        var suggestion = await _context.UserSuggestions.FindAsync(suggestionId);
+                        if (suggestion != null)
+                        {
+                            _context.UserSuggestions.Remove(suggestion);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error saving article to the database");
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+           /* }*/
+
+            var allCategories = _context.Categories.ToList();
+            allCategories.Insert(0, new CategoryModel { Id = 0, CategoryName = "Other" });
+            ViewData["Categories"] = new SelectList(allCategories, "Id", "CategoryName", article.CategoryId);
+
             return View(article);
         }
+
+
 
 
 
