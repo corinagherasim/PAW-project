@@ -1,4 +1,7 @@
-﻿﻿@using System.Security.Claims;
+﻿@using System.Security.Claims;
+@using proj.Models;
+@inject proj.Data.ApplicationDbContext _context;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +29,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @foreach (var category in _context.Categories)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Category" asp-route-id="@category.Id">@category.CategoryName</a>
+                            </li>
+                        }
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("User"))

@@ -1,0 +1,37 @@
+﻿@model proj.Models.ArticleModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<p><strong>Headline:</strong> @Model.HeadLine</p>
+<p><strong>Date:</strong> @Model.Date.ToShortDateString()</p>
+@if (!string.IsNullOrEmpty(Model.Photo))
+{
+    <img src="@Model.Photo" alt="Article Image" style="max-width:100%; height:auto;"/>
+}
+<p>@Model.Content</p>
+
+<hr />
+
+<h3>Comments</h3>
+
+@foreach (var comment in Model.Comments.OrderByDescending(c => c.Date))
+{
+    <div class="comment">
+        <p><strong>@comment.UserName</strong> <small>@comment.Date.ToString("g")</small></p>
+        <p>@comment.Content</p>
+    </div>
+}
+
+<hr />
+
+<h4>Add a comment</h4>
+<form asp-action="AddComment" method="post">
+    <input type="hidden" name="articleId" value="@Model.Id" />
+    <div class="form-group">
+        <textarea name="content" class="form-control" rows="3" placeholder="Write your comment here..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

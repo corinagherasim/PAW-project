@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace proj.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +25,59 @@ namespace proj.Controllers
             _logger = logger;
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var article = await _context.Articles
+                .Include(a => a.Comments)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
+        }
+        [Authorize(Roles = "User,Admin,Editor")]
+        [HttpPost]
+        public async Task<IActionResult> AddComment(int articleId, string content)
+        {
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return RedirectToAction("Details", new { id = articleId });
+            }
+
+            var userName = User.Identity.IsAuthenticated ? User.Identity.Name : "Anonymous";
+
+            var comment = new CommentModel
+            {
+                Content = content,
+                Date = DateTime.Now,
+                ArticleId = articleId,
+                UserName = userName
+            };
+
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = articleId });
+        }
+
+        public async Task<IActionResult> Category(int id)
+        {
+            var category = await _context.Categories
+                                         .Include(c => c.Articles)
+                                         .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [Authorize(Roles = "Editor")]
         public IActionResult Create(int? suggestionId)
         {
             if (suggestionId != null)
@@ -53,7 +106,7 @@ namespace proj.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = "Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article, string NewCategory)
