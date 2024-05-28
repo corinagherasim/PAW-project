@@ -6,11 +6,23 @@
 
 <h2>@Model.CategoryName</h2>
 
+<p>
+    Sort by:
+    <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.TitleSortParm">Title</a> |
+    <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.DateSortParm">Date</a>
+</p>
+
 @foreach (var article in Model.Articles)
 {
     <div class="article">
         <h3>@article.Title</h3>
         <p>@article.HeadLine</p>
+        <p><small>@article.Date.ToShortDateString()</small></p>
+        @if (!string.IsNullOrEmpty(article.Photo))
+        {
+            <img src="@article.Photo" alt="Article Image" style="max-width:100%; height:auto;" />
+        }
+        <p>@article.Content</p>
         <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
     </div>
 }

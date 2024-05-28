@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using proj.Data;
 using proj.Models;
@@ -63,16 +64,43 @@ namespace proj.Controllers
             return RedirectToAction("Details", new { id = articleId });
         }
 
-        public async Task<IActionResult> Category(int id)
+        public async Task<IActionResult> Category(int id, string sortOrder)
         {
             var category = await _context.Categories
-                                         .Include(c => c.Articles)
-                                         .FirstOrDefaultAsync(c => c.Id == id);
+                .Include(c => c.Articles)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null)
             {
                 return NotFound();
             }
+
+            ViewBag.TitleSortParm = sortOrder == "title" ? "title_desc" : "title";
+            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+
+            var articles = from a in category.Articles
+            select a;
+
+            switch (sortOrder)
+            {
+                case "title":
+                    articles = articles.OrderBy(a => a.Title);
+                    break;
+                case "title_desc":
+                    articles = articles.OrderByDescending(a => a.Title);
+                    break;
+                case "date":
+                    articles = articles.OrderByDescending(a => a.Date).ThenByDescending(a => a.Id);
+                    break;
+                case "date_desc":
+                    articles = articles.OrderBy(a => a.Date).ThenBy(a => a.Id);
+                    break;
+                default:
+                    articles = articles.OrderByDescending(a => a.Date).ThenByDescending(a => a.Id);
+                    break;
+            }
+
+            category.Articles = articles.ToList();
 
             return View(category);
         }
