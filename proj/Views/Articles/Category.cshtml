@@ -1,0 +1,16 @@
+﻿@model proj.Models.CategoryModel
+
+@{
+    ViewData["Title"] = Model.CategoryName;
+}
+
+<h2>@Model.CategoryName</h2>
+
+@foreach (var article in Model.Articles)
+{
+    <div class="article">
+        <h3>@article.Title</h3>
+        <p>@article.HeadLine</p>
+        <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
+    </div>
+}

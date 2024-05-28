@@ -12,6 +12,7 @@ namespace proj.Models
         public DateTime Date { get; set; }
         public int ArticleId { get; set; }
         public virtual ArticleModel Article { get; set; }
+        public string UserName { get; set; }
 
     }
 }
