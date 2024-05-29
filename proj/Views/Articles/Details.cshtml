@@ -9,8 +9,10 @@
 <p><strong>Date:</strong> @Model.Date.ToShortDateString()</p>
 @if (!string.IsNullOrEmpty(Model.Photo))
 {
-    <img src="@Model.Photo" alt="Article Image" style="max-width:100%; height:auto;"/>
+    <img src="~/imag/@Model.Photo" alt="Article Image" style="max-width:700px; height:300px;" />
 }
+
+<br>
 <p>@Model.Content</p>
 
 <hr />

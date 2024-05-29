@@ -3,8 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace proj.Models
 {
+
     public class ArticleModel
     {
+        public ArticleModel()
+        {
+            Comments = new List<CommentModel>(); // Inițializează colecția de comentarii
+        }
+
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Titlul este obligatoriu")]

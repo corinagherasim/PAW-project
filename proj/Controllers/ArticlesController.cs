@@ -95,8 +95,14 @@ namespace proj.Controllers
                 case "date_desc":
                     articles = articles.OrderBy(a => a.Date).ThenBy(a => a.Id);
                     break;
+                case "comments":
+                    articles = articles.OrderByDescending(a => a.Comments?.Count ?? 0).ThenByDescending(a => a.Date).ThenByDescending(a => a.Id);
+                    break;
+                case "comments_desc":
+                    articles = articles.OrderBy(a => a.Comments?.Count ?? 0).ThenBy(a => a.Date).ThenBy(a => a.Id);
+                    break;
                 default:
-                    articles = articles.OrderByDescending(a => a.Date).ThenByDescending(a => a.Id);
+                    articles = articles.OrderByDescending(a => a.Comments.Count).ThenByDescending(a => a.Date).ThenByDescending(a => a.Id);
                     break;
             }
 
@@ -185,6 +191,20 @@ namespace proj.Controllers
             return View(article);
         }
 
+        public async Task<IActionResult> Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return View(new List<ArticleModel>());
+            }
+
+            var articles = await _context.Articles
+                                         .Include(a => a.Comments)
+                                         .Where(a => a.Title.Contains(query) || a.Content.Contains(query) || a.HeadLine.Contains(query))
+                                         .ToListAsync();
+
+            return View(articles);
+        }
 
 
 

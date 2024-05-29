@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/proj.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css">
 </head>
 <body>
     <header>
@@ -60,6 +61,12 @@
                             }
                         }
                     </ul>
+                    <form asp-controller="Articles" asp-action="Search" method="get" class="form-inline my-2 my-lg-0">
+                        <div class= "input-group">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" />
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
