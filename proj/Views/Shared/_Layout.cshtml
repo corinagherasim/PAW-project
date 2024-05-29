@@ -1,6 +1,6 @@
-﻿@using System.Security.Claims;
-@using proj.Models;
-@inject proj.Data.ApplicationDbContext _context;
+﻿@using System.Security.Claims
+@using proj.Models
+@inject proj.Data.ApplicationDbContext _context
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">C&C</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -61,10 +61,12 @@
                             }
                         }
                     </ul>
-                    <form asp-controller="Articles" asp-action="Search" method="get" class="form-inline my-2 my-lg-0">
-                        <div class= "input-group">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" />
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                    <form class="d-flex" asp-controller="Articles" asp-action="Search">
+                        <div class="input-group">
+                            <input class="form-control" type="search" name="query" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </div>
                     </form>
                     <partial name="_LoginPartial" />
@@ -72,7 +74,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top: 70px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
