@@ -1,0 +1,26 @@
+﻿@model IEnumerable<proj.Models.ArticleModel>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2>Search Results</h2>
+
+@if (!Model.Any())
+{
+    <p>No articles found matching your search criteria.</p>
+}
+else
+{
+    <ul>
+        @foreach (var article in Model)
+        {
+            <li>
+                <h3>@article.Title</h3>
+                <p>@article.HeadLine</p>
+                <p><small>@article.Date.ToShortDateString()</small></p>
+                <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
+            </li>
+        }
+    </ul>
+}

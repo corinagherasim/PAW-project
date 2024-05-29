@@ -9,18 +9,22 @@
 <br />
 
 <div class="container">
-    @foreach (var articles in ViewBag.NewsList)
+    @foreach (var article in ViewBag.NewsList)
     {
+        <br>
+        <h2 class="news">@article.Title</h2>
 
-        <h2 class="news">@articles.Title</h2>
+        <p class="news">@article.Date.ToShortDateString()</p>
 
-        <p class="news">@articles.Date.ToShortDateString()</p>
+        <p class="news">@article.Category</p>
 
-        <p class="news">@articles.Category</p>
+        <p class="news">@article.HeadLine</p>
 
-        <p class="news">@articles.HeadLine</p>
+        <img class="photo" src="~/imag/@article.Photo" style="max-width:700px; height:300px;" />
 
-        <img class="photo" src="~/imag/@articles.Photo" />
+        <br>
+        <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
+        
 
     }
 </div>
