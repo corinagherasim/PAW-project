@@ -1,18 +1,202 @@
-html {
-  font-size: 14px;
+﻿html {
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+.input-group {
+    width: auto;
+}
+
+    .input-group .form-control {
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+
+    .input-group .btn.nav-link {
+        border-radius: 0 0.25rem 0.25rem 0;
+        border-left: 0;
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+        .input-group .btn.nav-link:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: transparent;
+        }
+
+.navbar-nav .nav-link:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.news-container {
+    width: 100%;
+    max-width: 800px; /* You can adjust the max-width as needed */
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+
+.news-article {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.news-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.news-date,
+.news-category,
+.news-headline {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.news-photo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.news-readmore {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 10px;
+    color: #ffffff; 
+    background-color: #808080;
+    border-color: #808080;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .news-readmore:hover {
+        background-color: #606060;
+        color: #ffffff;
+    }
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.article {
+    border: dotted;
+
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.btn-primary {
+    display: inline-block;
+}
+
+
+.create-article-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .create-article-form label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .create-article-form input[type="text"],
+    .create-article-form textarea,
+    .create-article-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .create-article-form input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        color: #ffffff;
+        background-color: #808080;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-article-form input[type="submit"]:hover {
+            background-color: #606060;
+        }
+
+.input-cell {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+    .input-cell label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .input-cell input[type="text"],
+    .input-cell textarea,
+    .input-cell select {
+        width: 700px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+
+
+
+
