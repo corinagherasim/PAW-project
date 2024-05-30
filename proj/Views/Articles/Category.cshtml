@@ -4,26 +4,28 @@
     ViewData["Title"] = Model.CategoryName;
 }
 
-<h2>@Model.CategoryName</h2>
+<div class="text-center">
+    <h2>@Model.CategoryName</h2>
 
-<p>
-    Sort by:
-    <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.TitleSortParm">Title</a> |
-    <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.DateSortParm">Date</a> 
-</p>
+    <p>
+        Sort by:
+        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.TitleSortParm">Title</a> |
+        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.DateSortParm">Date</a>
+    </p>
+</div>
 
-@foreach (var article in Model.Articles)
-{
-    <div class="article">
-        <br>
-        <h3>@article.Title</h3>
-        <p><small>@article.Date.ToShortDateString()</small></p>
-        <p>@article.HeadLine</p>
-        @if (!string.IsNullOrEmpty(article.Photo))
-        {
-            <img src="~/imag/@article.Photo" alt="Article Image" style="max-width:700px; height:300px;" />
-        }
-        <br>
-        <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
-    </div>
-}
+<div class="news-container">
+    @foreach (var article in Model.Articles)
+    {
+        <div class="news-article">
+            <h3 class="news-title">@article.Title</h3>
+            <p class="news-date"><small>@article.Date.ToShortDateString()</small></p>
+            <p class="news-headline">@article.HeadLine</p>
+            @if (!string.IsNullOrEmpty(article.Photo))
+            {
+                <img src="~/imag/@article.Photo" alt="Article Image" class="news-photo" />
+            }
+            <a href="@Url.Action("Details", "Articles", new { id = article.Id })" class="news-readmore">Read more</a>
+        </div>
+    }
+</div>

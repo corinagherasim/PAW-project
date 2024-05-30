@@ -8,23 +8,18 @@
 
 <br />
 
-<div class="container">
+<div class="news-container">
     @foreach (var article in ViewBag.NewsList)
     {
-        <br>
-        <h2 class="news">@article.Title</h2>
-
-        <p class="news">@article.Date.ToShortDateString()</p>
-
-        <p class="news">@article.Category</p>
-
-        <p class="news">@article.HeadLine</p>
-
-        <img class="photo" src="~/imag/@article.Photo" style="max-width:700px; height:300px;" />
-
-        <br>
-        <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
-        
-
+        <div class="news-article">
+            <h3 class="news-title">@article.Title</h3>
+            <p class="news-date"><small>@article.Date.ToShortDateString()</small></p>
+            <p class="news-headline">@article.HeadLine</p>
+            @if (!string.IsNullOrEmpty(article.Photo))
+            {
+                <img src="~/imag/@article.Photo" alt="Article Image" class="news-photo" />
+            }
+            <a href="@Url.Action("Details", "Articles", new { id = article.Id })" class="news-readmore">Read more</a>
+        </div>
     }
 </div>

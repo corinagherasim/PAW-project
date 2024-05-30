@@ -1,4 +1,61 @@
-﻿a.navbar-brand {
+﻿html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.input-group {
+    width: auto;
+}
+
+    .input-group .form-control {
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+
+    .input-group .btn.nav-link {
+        border-radius: 0 0.25rem 0.25rem 0;
+        border-left: 0;
+        border-color: transparent;
+        transition: box-shadow 0.3s ease-in-out;
+        color: inherit;
+        background: none;
+    }
+
+        .input-group .btn.nav-link:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+.navbar-nav .nav-link:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.btn-outline-success {
+    color: inherit;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+    .btn-outline-success:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: inherit;
+        background-color: transparent;
+    }
+
+a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
@@ -44,30 +101,3 @@ button.accept-policy {
     white-space: nowrap;
     line-height: 60px;
 }
-
-.input-group {
-    width: auto;
-}
-
-    .input-group .form-control {
-        border-radius: 0.25rem 0 0 0.25rem;
-    }
-
-    .input-group .btn-outline-success {
-        border-radius: 0 0.25rem 0.25rem 0;
-        border-left: 0;
-    }
-
-.navbar-nav .nav-link:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease-in-out;
-}
-
-.navbar-nav .btn-outline-success {
-    border-color: transparent;
-    transition: box-shadow 0.3s ease-in-out;
-}
-
-    .navbar-nav .btn-outline-success:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
