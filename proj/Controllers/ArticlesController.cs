@@ -77,9 +77,10 @@ namespace proj.Controllers
 
             ViewBag.TitleSortParm = sortOrder == "title" ? "title_desc" : "title";
             ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+            ViewBag.CommentSortParm = sortOrder == "comments" ? "comments_desc" : "comments";
 
             var articles = from a in category.Articles
-            select a;
+                           select a;
 
             switch (sortOrder)
             {
@@ -96,10 +97,12 @@ namespace proj.Controllers
                     articles = articles.OrderBy(a => a.Date).ThenBy(a => a.Id);
                     break;
                 case "comments":
-                    articles = articles.OrderByDescending(a => a.Comments?.Count ?? 0).ThenByDescending(a => a.Date).ThenByDescending(a => a.Id);
+                    articles = articles.OrderByDescending(a => a.Comments?.Count ?? 0)
+                                      .ThenByDescending(a => a.Date)
+                                      .ThenByDescending(a => a.Id);
                     break;
                 case "comments_desc":
-                    articles = articles.OrderBy(a => a.Comments?.Count ?? 0).ThenBy(a => a.Date).ThenBy(a => a.Id);
+                    articles = articles.OrderBy(a => a.Comments?.Count ?? 0); // Sortare inversă după numărul de comentarii
                     break;
                 default:
                     articles = articles.OrderByDescending(a => a.Comments.Count).ThenByDescending(a => a.Date).ThenByDescending(a => a.Id);
@@ -205,9 +208,6 @@ namespace proj.Controllers
 
             return View(articles);
         }
-
-
-
 
     }
 }

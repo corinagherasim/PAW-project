@@ -26,5 +26,10 @@ namespace proj.Models
         public virtual CategoryModel Category { get; set; }
         [BindNever]
         public virtual ICollection<CommentModel> Comments { get; set; }
+
+        public int GetNumberOfComments()
+        {
+            return Comments.Count;
+        }
     }
 }
