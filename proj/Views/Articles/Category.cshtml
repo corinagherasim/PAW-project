@@ -9,9 +9,10 @@
 
     <p>
         Sort by:
-        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.TitleSortParm">Title</a> |
-        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.DateSortParm">Date</a>
+        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.TitleSortParm" class="news-readmore">Title</a> |
+        <a asp-route-id="@Model.Id" asp-route-sortOrder="@ViewBag.DateSortParm" class="news-readmore">Date</a>
     </p>
+
 </div>
 
 <div class="news-container">
