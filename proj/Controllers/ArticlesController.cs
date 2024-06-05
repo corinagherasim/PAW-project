@@ -150,7 +150,7 @@ namespace proj.Controllers
         {
             if (article.IsExternal)
             {
-                article.Content = "his news article has been sourced from another website. For more details, please visit the link:";
+                article.Content = "This news article has been sourced from another website. For more details, please visit the link:";
             }
 
             if (!string.IsNullOrEmpty(NewCategory))
