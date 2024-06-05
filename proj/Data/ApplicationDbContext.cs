@@ -17,5 +17,13 @@ namespace proj.Data
         public DbSet<UserCustom> UsersCustom { get; set; }
         public DbSet<UserSuggestionModel> UserSuggestions { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ArticleModel>().Property(a => a.IsExternal).IsRequired();
+            modelBuilder.Entity<ArticleModel>().Property(a => a.Link).HasMaxLength(500);
+        }
+
     }
 }

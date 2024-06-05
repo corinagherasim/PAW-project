@@ -146,8 +146,13 @@ namespace proj.Controllers
         [Authorize(Roles = "Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId")] ArticleModel article, string NewCategory)
+        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId,IsExternal,ExternalLink")] ArticleModel article, string NewCategory)
         {
+            if (article.IsExternal)
+            {
+                article.Content = "Această știre a fost preluată de pe alt site.";
+            }
+
             if (!string.IsNullOrEmpty(NewCategory))
             {
                 // Adaugă noua categorie în baza de date
@@ -185,7 +190,7 @@ namespace proj.Controllers
                     _logger.LogError(ex, "Error saving article to the database");
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
-           /* }*/
+            /*}*/
 
             var allCategories = _context.Categories.ToList();
             allCategories.Insert(0, new CategoryModel { Id = 0, CategoryName = "Other" });

@@ -13,7 +13,17 @@
 }
 
 <br>
-<p>@Model.Content</p>
+@if (Model.IsExternal)
+{
+    <p>Această știre a fost preluată de pe alt site. Pentru mai multe detalii, accesați link-ul: </p>
+    <p>
+        <a href="@Model.Link" target="_blank" class="news-readmore">Link</a>
+    </p>
+}
+else
+{
+    <p>@Model.Content</p>
+}
 
 <hr />
 

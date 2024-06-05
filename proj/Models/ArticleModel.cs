@@ -26,7 +26,8 @@ namespace proj.Models
         public virtual CategoryModel Category { get; set; }
         [BindNever]
         public virtual ICollection<CommentModel> Comments { get; set; }
-
+        public string? Link { get; set; }
+        public bool IsExternal { get; set; } 
         public int GetNumberOfComments()
         {
             return Comments.Count;

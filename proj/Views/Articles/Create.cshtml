@@ -42,6 +42,15 @@
                 <input type="text" id="NewCategory" name="NewCategory" class="form-control" />
                 <span class="text-danger" id="NewCategoryError" style="display:none;">This field is required if you select 'Other'</span>
             </div>
+            <div class="form-group input-cell">
+                <input type="checkbox" asp-for="IsExternal" id="IsExternalCheckbox" onclick="checkExternal()" />
+                <label asp-for="IsExternal" class="control-label">Is this article from another site?</label>
+            </div>
+            <div class="form-group input-cell" id="LinkDiv" style="display:none;">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="Add" class="news-readmore" />
@@ -78,8 +87,19 @@
             }
         }
 
+        function checkExternal() {
+            var isExternalCheckbox = document.getElementById("IsExternalCheckbox");
+            var externalLinkDiv = document.getElementById("LinkDiv");
+            if (isExternalCheckbox.checked) {
+                externalLinkDiv.style.display = "block";
+            } else {
+                externalLinkDiv.style.display = "none";
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', (event) => {
             checkCategory();
+            checkExternal();
         });
     </script>
     @{
