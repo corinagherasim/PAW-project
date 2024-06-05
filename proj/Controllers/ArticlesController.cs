@@ -146,11 +146,11 @@ namespace proj.Controllers
         [Authorize(Roles = "Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId,IsExternal,ExternalLink")] ArticleModel article, string NewCategory)
+        public async Task<IActionResult> Create([Bind("Title,Content,HeadLine,Photo,CategoryId,IsExternal,Link")] ArticleModel article, string NewCategory)
         {
             if (article.IsExternal)
             {
-                article.Content = "Această știre a fost preluată de pe alt site.";
+                article.Content = "his news article has been sourced from another website. For more details, please visit the link:";
             }
 
             if (!string.IsNullOrEmpty(NewCategory))

@@ -8,7 +8,7 @@ namespace proj.Models
     {
         public ArticleModel()
         {
-            Comments = new List<CommentModel>(); // Inițializează colecția de comentarii
+            Comments = new List<CommentModel>();
         }
 
         [Key]
