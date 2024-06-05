@@ -15,11 +15,11 @@ else
     <ul>
         @foreach (var article in Model)
         {
-            <li>
-                <h3>@article.Title</h3>
-                <p>@article.HeadLine</p>
-                <p><small>@article.Date.ToShortDateString()</small></p>
-                <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read more</a>
+            <li class="news-article">
+                <h3 class="news-title">@article.Title</h3>
+                <p class="news-headline">@article.HeadLine</p>
+                <p class="news-date"><small>@article.Date.ToShortDateString()</small></p>
+                <a href="@Url.Action("Details", "Articles", new { id = article.Id })" class="news-readmore">Read more</a>
             </li>
         }
     </ul>
